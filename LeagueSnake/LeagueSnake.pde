@@ -24,11 +24,12 @@ public Segment(int x, int y) {
 // All the game variables that will be shared by the game methods are here
 //*
 Segment head;
+Segment tail;
 int foodx;
 int foody;
 int sDirection = DOWN;
 int foodEaten;
-
+ArrayList<Segment> segments = new ArrayList<Segment>();
 
 
 //*
@@ -39,6 +40,7 @@ int foodEaten;
 void setup() {
 size(500, 500);
 head = new Segment(1,1);
+tail = new Segment(head.x, head.y);
 frameRate(20);
 //head.x
 dropFood();
@@ -58,7 +60,7 @@ void dropFood() {
 //*
 
 void draw() {
-  background(75, 185, 25);
+  background(197, 85, 159);
   drawFood();
   move();
   drawSnake();
@@ -67,14 +69,15 @@ void draw() {
 
 void drawFood() {
   //Draw the food
-  fill(185, 25, 25);
+  fill(255, 25, 25);
   rect(foodx, foody, 10, 10);
 }
 
 void drawSnake() {
   //Draw the head of the snake followed by its tail
-  fill(25, 255, 25);
+  fill(86, 168, 197);
   rect(head.x, head.y, 10, 10);
+  eat();
 }
 
 
@@ -85,13 +88,18 @@ void drawSnake() {
 
 void drawTail() {
   //Draw each segment of the tail 
-
+fill(86, 168, 197);
+for (int i = 0; i <= segments.size(); i++) {
+  rect(1, 1, 10, 10);
+}
 }
 
 void manageTail() {
   //After drawing the tail, add a new segment at the "start" of the tail and remove the one at the "end" 
   //This produces the illusion of the snake tail moving.
-  
+  checkTailCollision();
+  drawTail();
+  segments.add(tail);
 }
 
 void checkTailCollision() {
@@ -143,17 +151,34 @@ void move() {
     break;
   }
   checkBoundaries();
+  
 }
 
 void checkBoundaries() {
  //If the snake leaves the frame, make it reappear on the other side
- 
+ if (head.x < -10) {
+   head.x = 500;
+ }
+ else if (head.x > 500) {
+  head.x = 0; 
+ }
+ else if (head.y < -10) {
+  head.y = 500; 
+ }
+ else if (head.y > 500) {
+  head.y = 0; 
+ }
 }
 
 
 
 void eat() {
   //When the snake eats the food, its tail should grow and more food appear
+  if (head.x < foodx + 10 && head.x > foodx - 10 && head.y < foody + 10 && head.y > foody - 10) {
 foodEaten++;
-
+System.out.println("hello");
+System.out.println(foodx);
+System.out.println(foody);
+dropFood();
+  }
 }
