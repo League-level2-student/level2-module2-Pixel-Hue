@@ -60,7 +60,7 @@ void dropFood() {
 //*
 
 void draw() {
-  background(197, 85, 159);
+  background(168, 202, 88);
   drawFood();
   move();
   drawSnake();
@@ -78,6 +78,7 @@ void drawSnake() {
   fill(86, 168, 197);
   rect(head.x, head.y, 10, 10);
   eat();
+  manageTail();
 }
 
 
@@ -89,8 +90,8 @@ void drawSnake() {
 void drawTail() {
   //Draw each segment of the tail 
 fill(86, 168, 197);
-for (int i = 0; i <= segments.size(); i++) {
-  rect(1, 1, 10, 10);
+for (int i = 0; i <= foodEaten; i++) {
+  rect(-20, -20, 10, 10);
 }
 }
 
@@ -100,12 +101,18 @@ void manageTail() {
   checkTailCollision();
   drawTail();
   segments.add(tail);
+  segments.remove(0);
 }
 
 void checkTailCollision() {
   //If the snake crosses its own tail, shrink the tail back to one segment
-  
-}
+ //if (head.x <  + 10 && head.x >  - 10 && head.y <  + 10 && head.y >  - 10) {
+ //foodEaten = 0;
+ //segments.clear();
+ //segments.add(tail);
+ //}
+ 
+ }
 
 
 
