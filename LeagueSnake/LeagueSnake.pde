@@ -40,7 +40,7 @@ ArrayList<Segment> segments = new ArrayList<Segment>();
 void setup() {
 size(500, 500);
 head = new Segment(1,1);
-tail = new Segment(head.x, head.y);
+
 frameRate(20);
 //head.x
 dropFood();
@@ -91,7 +91,7 @@ void drawTail() {
   //Draw each segment of the tail 
 fill(86, 168, 197);
 for (int i = 0; i <= foodEaten; i++) {
-  rect(-20, -20, 10, 10);
+  rect(head.x, head.y, 10, 10);
 }
 }
 
@@ -100,18 +100,21 @@ void manageTail() {
   //This produces the illusion of the snake tail moving.
   checkTailCollision();
   drawTail();
-  segments.add(tail);
+ 
+  segments.add(tail = new Segment(head.x, head.y));
   segments.remove(0);
 }
 
 void checkTailCollision() {
   //If the snake crosses its own tail, shrink the tail back to one segment
- //if (head.x <  + 10 && head.x >  - 10 && head.y <  + 10 && head.y >  - 10) {
- //foodEaten = 0;
- //segments.clear();
- //segments.add(tail);
- //}
- 
+  for (int i = 0; i < segments.size() - 1; i++) {
+ if (segments.get(i).x -10 <= head.x && segments.get(i).x +10 >= head.x && head.y >= segments.get(i).y - 10 && head.y <= segments.get(i).y + 10) {
+ foodEaten = 0;
+ segments.clear();
+ segments.add(tail);
+ System.out.println("game over");
+ }
+  }
  }
 
 
