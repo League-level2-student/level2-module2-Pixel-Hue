@@ -90,7 +90,7 @@ void drawSnake() {
 void drawTail() {
   //Draw each segment of the tail 
 fill(86, 168, 197);
-for (int i = 0; i <= foodEaten; i++) {
+for (int i = 0; i <= segments.size() - 1; i++) {
   rect(head.x, head.y, 10, 10);
 }
 }
@@ -187,8 +187,7 @@ void eat() {
   if (head.x < foodx + 10 && head.x > foodx - 10 && head.y < foody + 10 && head.y > foody - 10) {
 foodEaten++;
 System.out.println("hello");
-System.out.println(foodx);
-System.out.println(foody);
+
 dropFood();
   }
 }
