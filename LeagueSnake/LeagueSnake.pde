@@ -91,7 +91,7 @@ void drawTail() {
   //Draw each segment of the tail 
 fill(86, 168, 197);
 for (int i = 0; i <= segments.size() - 1; i++) {
-  rect(head.x, head.y, 10, 10);
+  rect(segments.get(i).x, segments.get(i).y, 10, 10);
 }
 }
 
@@ -101,18 +101,18 @@ void manageTail() {
   checkTailCollision();
   drawTail();
  
-  segments.add(tail = new Segment(head.x, head.y));
+  segments.add(new Segment(head.x, head.y));
   segments.remove(0);
 }
 
 void checkTailCollision() {
   //If the snake crosses its own tail, shrink the tail back to one segment
   for (int i = 0; i < segments.size() - 1; i++) {
- if (segments.get(i).x -10 <= head.x && segments.get(i).x +10 >= head.x && head.y >= segments.get(i).y - 10 && head.y <= segments.get(i).y + 10) {
+ if (segments.get(i).x -3 <= head.x && segments.get(i).x +3 >= head.x && head.y >= segments.get(i).y -3 && head.y <= segments.get(i).y + 3) {
  foodEaten = 0;
  segments.clear();
- segments.add(tail);
- System.out.println("game over");
+ 
+System.out.println("game over");
  }
   }
  }
@@ -148,16 +148,16 @@ void move() {
     
   switch(sDirection) {
   case UP:
-    head.y-=5;
+    head.y-=10;
     break;
   case DOWN:
-     head.y+=5;
+     head.y+=10;
     break;
   case LEFT:
-   head.x-=5;
+   head.x-=10;
     break;
   case RIGHT:
-   head.x+=5;
+   head.x+=10;
     break;
   }
   checkBoundaries();
@@ -186,8 +186,8 @@ void eat() {
   //When the snake eats the food, its tail should grow and more food appear
   if (head.x < foodx + 10 && head.x > foodx - 10 && head.y < foody + 10 && head.y > foody - 10) {
 foodEaten++;
-System.out.println("hello");
-
+System.out.println(segments.size());
+segments.add(new Segment(head.x + 520, head.y + 520));
 dropFood();
   }
 }
